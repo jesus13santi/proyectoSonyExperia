@@ -20,20 +20,26 @@ public class Ensamblador extends Thread {
     public Semaphore semCamaras;
     public Semaphore semBotones;
     public Semaphore semSonyExperia;
-    public Semaphore mutexEnsamblador;
+    public Semaphore mutexPantallas;
+    public Semaphore mutexBotones;
+    public Semaphore mutexCamaras;
+    public Semaphore mutexPinCarga;
     public Boolean contratado;
     public float sueldo;
     public float dia;
     public int dia_pago =1;
     public float pago_diario;
 
-    public Ensamblador (Semaphore semPinCarga, Semaphore semPantalla, Semaphore semCamaras, Semaphore semBotones, Semaphore semSonyExperia, float sueldo, Semaphore mutexEnsamblador, float dia){
+    public Ensamblador (Semaphore semPinCarga, Semaphore semPantalla, Semaphore semCamaras, Semaphore semBotones, Semaphore semSonyExperia, float sueldo, Semaphore mutexCamaras, Semaphore mutexBotones, Semaphore mutexPantallas, Semaphore mutexPinCarga, float dia){
         this.semPinCarga = semPinCarga;   
         this.semPantalla = semPantalla;   
         this.semCamaras = semCamaras;   
         this.semBotones = semBotones;   
         this.semSonyExperia = semSonyExperia;   
-        this.mutexEnsamblador = mutexEnsamblador;
+        this.mutexPantallas = mutexPantallas;
+        this.mutexBotones = mutexBotones;
+        this.mutexCamaras = mutexCamaras;
+        this.mutexPinCarga = mutexPinCarga;
         this.sueldo= sueldo;
         this.dia= dia;
         this.contratado = true;
@@ -41,20 +47,20 @@ public class Ensamblador extends Thread {
         
     }
     
-    
-    public void stopToggle(){
-        this.contratado = !this.contratado;
-    }
+ 
     @Override
     public void run(){
         while (this.contratado && !ProyectoSonyExperia.exit){
         try {
             
             if(Jefe.dias_transcurridos ==dia_pago){
-                    pago_diario = sueldo*dia_pago;
-                   
+                    pago_diario += sueldo;
+                    ProyectoSonyExperia.mutexSalario.acquire();
                     ProyectoSonyExperia.gastosSalarios += sueldo;
                     Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
+                    ProyectoSonyExperia.mutexSalario.release();
+                    
+                    
                    
                     
                     dia_pago += 1;
@@ -64,19 +70,27 @@ public class Ensamblador extends Thread {
             
             if(ProyectoSonyExperia.numPinCarga>=1 && ProyectoSonyExperia.numBotones >=2 && ProyectoSonyExperia.numCamara >=2 && ProyectoSonyExperia.numPantallas >=1 ){
                 
-                mutexEnsamblador.acquire();
+                mutexPinCarga.acquire();
                 semPinCarga.release();
                 ProyectoSonyExperia.numPinCarga--;
-            
+                mutexPinCarga.release();
+                
+                mutexBotones.acquire();
                 semBotones.release(2);
                 ProyectoSonyExperia.numBotones-=2;
+                mutexBotones.release();
                 
+                
+                mutexCamaras.acquire();
                 semCamaras.release(2);
                 ProyectoSonyExperia.numCamara-=2;
+                mutexCamaras.release();
            
+                mutexPantallas.acquire();
                 semPantalla.release();
                 ProyectoSonyExperia.numPantallas--;
-                mutexEnsamblador.release();
+                mutexPantallas.release();
+                
                 Thread.sleep((long) (dia*1000*2));
                 
                 

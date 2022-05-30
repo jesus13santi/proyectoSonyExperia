@@ -577,7 +577,7 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
-            ProyectoSonyExperia.prod_botones[ProyectoSonyExperia.numProd_botones] = new ProductorBotones(ProyectoSonyExperia.semBotones, 10,ProyectoSonyExperia.mutexPantalla, ProyectoSonyExperia.dia );
+            ProyectoSonyExperia.prod_botones[ProyectoSonyExperia.numProd_botones] = new ProductorBotones(ProyectoSonyExperia.semBotones, 10,ProyectoSonyExperia.mutexBotones, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_botones[ProyectoSonyExperia.numProd_botones].start();
             ProyectoSonyExperia.numProd_botones++;
             numProductoresBotones.setText(""+ProyectoSonyExperia.numProd_botones);
@@ -589,7 +589,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void BtnAggProPantallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAggProPantallasActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
-            ProyectoSonyExperia.prod_pantalla[ProyectoSonyExperia.numProd_pantallas] = new ProductorPantalla(ProyectoSonyExperia.semPantallas, 10,ProyectoSonyExperia.mutexPantalla, ProyectoSonyExperia.dia );
+            ProyectoSonyExperia.prod_pantalla[ProyectoSonyExperia.numProd_pantallas] = new ProductorPantalla(ProyectoSonyExperia.semPantallas, 10,ProyectoSonyExperia.mutexPantallas, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_pantalla[ProyectoSonyExperia.numProd_pantallas].start();
             ProyectoSonyExperia.numProd_pantallas++;
             numProductoresPantallas.setText(""+ProyectoSonyExperia.numProd_pantallas);
@@ -601,7 +601,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void BtnAggProPcargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAggProPcargaActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
-            ProyectoSonyExperia.prod_pinCarga[ProyectoSonyExperia.numProd_pinCarga] = new ProductorPinCarga(ProyectoSonyExperia.semPinCarga, 10,ProyectoSonyExperia.mutexPantalla, ProyectoSonyExperia.dia );
+            ProyectoSonyExperia.prod_pinCarga[ProyectoSonyExperia.numProd_pinCarga] = new ProductorPinCarga(ProyectoSonyExperia.semPinCarga, 10,ProyectoSonyExperia.mutexPinCarga, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_pinCarga[ProyectoSonyExperia.numProd_pinCarga].start();
             ProyectoSonyExperia.numProd_pinCarga++;
             numProductoresPinCarga.setText(""+ProyectoSonyExperia.numProd_pinCarga);
@@ -613,7 +613,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void btnAggEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggEnsambladorActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
-            ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores] = new Ensamblador(ProyectoSonyExperia.semPinCarga, ProyectoSonyExperia.semPantallas, ProyectoSonyExperia.semCamaras, ProyectoSonyExperia.semBotones, ProyectoSonyExperia.semSonyExperia,  10, ProyectoSonyExperia.mutexPantalla, ProyectoSonyExperia.dia);
+            ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores] = new Ensamblador(ProyectoSonyExperia.semPinCarga,ProyectoSonyExperia.semPantallas, ProyectoSonyExperia.semCamaras, ProyectoSonyExperia.semBotones, ProyectoSonyExperia.semSonyExperia,  ProyectoSonyExperia.sueldo_ensamblador, ProyectoSonyExperia.mutexCamaras, ProyectoSonyExperia.mutexBotones, ProyectoSonyExperia.mutexPantallas, ProyectoSonyExperia.mutexPinCarga, ProyectoSonyExperia.dia);
             ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores].start();
             ProyectoSonyExperia.num_ensambladores++;
             numEnsambladores.setText(""+ProyectoSonyExperia.num_ensambladores);
@@ -659,7 +659,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void BtnAggProCamarasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAggProCamarasActionPerformed
         // TODO add your handling code here:
        if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
-            ProyectoSonyExperia.prod_camara[ProyectoSonyExperia.numProd_camaras] = new ProductorCamara(ProyectoSonyExperia.semCamaras, 10,ProyectoSonyExperia.mutexPantalla, ProyectoSonyExperia.dia );
+            ProyectoSonyExperia.prod_camara[ProyectoSonyExperia.numProd_camaras] = new ProductorCamara(ProyectoSonyExperia.semCamaras, 10,ProyectoSonyExperia.mutexCamaras, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_camara[ProyectoSonyExperia.numProd_camaras].start();
             ProyectoSonyExperia.numProd_camaras++;
             numProductoresCamaras.setText(""+ProyectoSonyExperia.numProd_camaras);

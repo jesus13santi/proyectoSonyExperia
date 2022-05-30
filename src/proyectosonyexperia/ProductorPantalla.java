@@ -36,9 +36,7 @@ public class ProductorPantalla extends Thread {
     }
     
     
-    public void stopToggle(){
-        this.contratado = !this.contratado;
-    }
+    
     @Override
     public void run(){
         while (this.contratado && !ProyectoSonyExperia.exit){
@@ -46,10 +44,10 @@ public class ProductorPantalla extends Thread {
             //PAGO
             if(Jefe.dias_transcurridos ==dia_pago){
                 pago_diario += sueldo;
-                
+                ProyectoSonyExperia.mutexSalario.acquire();
                 ProyectoSonyExperia.gastosSalarios += sueldo;
                 Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
-              
+                ProyectoSonyExperia.mutexSalario.release();
                 dia_pago += 1;
                 
                 
@@ -57,6 +55,7 @@ public class ProductorPantalla extends Thread {
             Thread.sleep((long) (dia*1000));
             semPantallas.acquire();
             mutexPantalla.acquire();
+            
             ProyectoSonyExperia.numPantallas++;
             
             Interfaz.pantallasProducidas.setText(""+ProyectoSonyExperia.numPantallas);

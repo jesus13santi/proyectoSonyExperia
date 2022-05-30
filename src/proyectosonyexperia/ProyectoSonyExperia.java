@@ -5,9 +5,23 @@
  */
 package proyectosonyexperia;
 
+import com.csvreader.CsvWriter;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +36,10 @@ public class ProyectoSonyExperia {
    public static Semaphore semSonyExperia = new Semaphore(1);  
    public static Semaphore semJefeGerente = new Semaphore(1,true);  
    public static Semaphore semProductores = new Semaphore(10);  
-   public static Semaphore mutexPantalla = new Semaphore(1);
+   public static Semaphore mutexPantallas = new Semaphore(1);
+   public static Semaphore mutexCamaras = new Semaphore(1);
+   public static Semaphore mutexBotones = new Semaphore(1);
+   public static Semaphore mutexPinCarga = new Semaphore(1);
    public static Semaphore mutexSalario = new Semaphore(1);
    
    
@@ -101,13 +118,25 @@ public class ProyectoSonyExperia {
     public static volatile int numCamara=0;
     public static volatile int numSonyExperia=0;
     
-    
+    public static void vender(){
+        
+        try {
+            
+            semSonyExperia.acquire();
+            numSonyExperia = 0;
+            semSonyExperia.release();
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ProyectoSonyExperia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     public static void ensamblar(){
-        productorPantalla1 = new ProductorPantalla(semPantallas, 10,mutexPantalla, dia );
-        productorBotones1 = new ProductorBotones(semBotones, 10,mutexPantalla, dia );
-        productorPinCarga1 = new ProductorPinCarga(semPinCarga, 10,mutexPantalla, dia );
-        productorCamara1 = new ProductorCamara(semCamaras, 10,mutexPantalla, dia );
-        Ensamblador1 = new Ensamblador(semPinCarga, semPantallas, semCamaras, semBotones, semSonyExperia,  10, mutexPantalla, dia);
+//        productorPantalla1 = new ProductorPantalla(semPantallas, 10,mutexPantalla, dia );
+//        productorBotones1 = new ProductorBotones(semBotones, 10,mutexPantalla, dia );
+//        productorPinCarga1 = new ProductorPinCarga(semPinCarga, 10,mutexPantalla, dia );
+//        productorCamara1 = new ProductorCamara(semCamaras, 10,mutexPantalla, dia );
+//        Ensamblador1 = new Ensamblador(semPinCarga, semPantallas, semCamaras, semBotones, semSonyExperia,  10, mutexPantalla, dia);
         Jefe = new Jefe(semJefeGerente, 30, 10, dia, semJefeGerente);
         Gerente = new Gerente(semJefeGerente, 30, 10, dia, semJefeGerente);
         
@@ -140,7 +169,8 @@ public class ProyectoSonyExperia {
         semBotones = new Semaphore(max_botones);  
         semPinCarga = new Semaphore(max_pinCarga);  
         semCamaras = new Semaphore(max_camaras); 
-
+        
+        
         semJefeGerente = new Semaphore(1, true);
         
         Jefe = new Jefe(semJefeGerente, diasDespacho, sueldo_Jefe, dia, semJefeGerente);
@@ -162,28 +192,28 @@ public class ProyectoSonyExperia {
 
         
         for( int i = 0; i<numProd_botones; i++) {
-            prod_botones[i] = new ProductorBotones(semBotones, sueldoProd_botones,mutexPantalla, dia );
+            prod_botones[i] = new ProductorBotones(semBotones, sueldoProd_botones,mutexBotones, dia );
             prod_botones[i].start();
         }
         
         for( int i = 0; i<numProd_pantallas; i++) {
-            prod_pantalla[i] = new ProductorPantalla(semPantallas, sueldoProd_pantalla,mutexPantalla, dia );
+            prod_pantalla[i] = new ProductorPantalla(semPantallas, sueldoProd_pantalla,mutexPantallas, dia );
             prod_pantalla[i].start();
         }
         
         for( int i = 0; i<numProd_pinCarga; i++) {
-            prod_pinCarga[i] = new ProductorPinCarga(semPinCarga, sueldoProd_pinCarga,mutexPantalla, dia );
+            prod_pinCarga[i] = new ProductorPinCarga(semPinCarga, sueldoProd_pinCarga,mutexPinCarga, dia );
             prod_pinCarga[i].start();
         }
         
         for( int i = 0; i<numProd_camaras; i++) {
-            prod_camara[i] = new ProductorCamara(semCamaras, sueldoProd_camaras,mutexPantalla, dia );
+            prod_camara[i] = new ProductorCamara(semCamaras, sueldoProd_camaras,mutexCamaras, dia );
             prod_camara[i].start();
         }
         
 
         for(int i = 0; i<num_ensambladores; i++){
-            ensambladores[i] = new Ensamblador(semPinCarga, semPantallas, semCamaras, semBotones, semSonyExperia,  sueldo_ensamblador, mutexPantalla, dia);
+            ensambladores[i] = new Ensamblador(semPinCarga, semPantallas, semCamaras, semBotones, semSonyExperia,  sueldo_ensamblador, mutexCamaras, mutexBotones, mutexPantallas, mutexPinCarga, dia);
             ensambladores[i].start();
         }
         
@@ -206,8 +236,8 @@ public class ProyectoSonyExperia {
         
     }
     
-    
-    
+
+
     public static boolean readCSV(File file){
         
         try {
@@ -277,14 +307,59 @@ public class ProyectoSonyExperia {
         
     }
     
-    public static void main(String[] args) {
+    public static void writeCsv(String filePath) {
+    try {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        // Crear objeto de escritura CSV
+        List<String> testList = new ArrayList<String>();
+        CsvWriter csvWriter = new CsvWriter(filePath, ',', Charset.forName("GBK"));
+                 // escribir encabezado
+        String[] headers = {"content","Estado","Monda"};
+       
+        csvWriter.writeRecord(headers);
+
+        String[] content1;
+        content1 = new String[headers.length];
+        content1[0]= "Hola";
+        content1[1]= "Hola";
+        content1[2]= "Hola";
+        String[] content2 = {"world"};
+        
+        
+        csvWriter.writeRecord(content1);
+        csvWriter.writeRecord(content2);
+        csvWriter.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+        
+    public static void escribirCSV(String filePath) throws CsvValidationException {
+    try {
+        String [] pais = {"Sain", "ES", "ESP", "724", "Yes"};
+        
+        
+        CSVWriter writer = new CSVWriter(new FileWriter(filePath));
+        writer.writeNext(pais);
+       
+        System.out.println("Escrito");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+   
+    
+    public static void main(String[] args) throws CsvValidationException  {
         // TODO code application logic here
         Interfaz.main(args);
+        writeCsv("estadistica.csv");
+       
         
         
-        
-        
-        
+               
     }
     
 }

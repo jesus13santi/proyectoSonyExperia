@@ -71,9 +71,10 @@ public class Gerente extends Thread {
             //PAGO
             if(Jefe.dias_transcurridos ==dia_pago){
                 pago_diario += sueldo;
-               
+                ProyectoSonyExperia.mutexSalario.acquire();
                 ProyectoSonyExperia.gastosSalarios += sueldo;
                 Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
+                ProyectoSonyExperia.mutexSalario.release();
                 
                 dia_pago += 1;
                
@@ -88,7 +89,7 @@ public class Gerente extends Thread {
                 Jefe.contador =ProyectoSonyExperia.diasDespacho;
                 ProyectoSonyExperia.numSonyExperiaVendidos += ProyectoSonyExperia.numSonyExperia;
                 Interfaz.numTelefonosVendidos.setText(""+ProyectoSonyExperia.numSonyExperiaVendidos);
-                ProyectoSonyExperia.numSonyExperia = 0;
+                ProyectoSonyExperia.vender();
                 Interfaz.TelefonosProducidos.setText(""+ProyectoSonyExperia.numSonyExperia);
                 
             }
@@ -113,11 +114,15 @@ public class Gerente extends Thread {
                 if(Gerente.estado == "REVISANDO JEFE" && Jefe.estado == "jugando"){
                     jefeEncontradoJugando+=1;
                     Interfaz.EncontroJefe.setText(""+jefeEncontradoJugando);
+                    
                     Jefe.pago_diario-= 2;
                     Interfaz.SalarioJefe.setText("$"+Jefe.pago_diario);
-                 
+                    ProyectoSonyExperia.mutexSalario.acquire();
                     ProyectoSonyExperia.gastosSalarios -= 2;
                     Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
+                    ProyectoSonyExperia.mutexSalario.release();
+                 
+                    
                     
                 }
                 Thread.sleep((long) (dia*1000/(24/aux_minutos)));
