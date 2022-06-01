@@ -26,7 +26,23 @@ public class Interfaz extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
+        EstadoBtn(false);
         
+    }
+    private void EstadoBtn(Boolean value){
+    
+        btnAggProBotones.setEnabled(value);
+        BtnAggProPantallas.setEnabled(value);
+        BtnAggProPcarga.setEnabled(value);
+        BtnAggProCamaras.setEnabled(value);
+        btnAggEnsamblador.setEnabled(value);
+        BtnDelProBotones.setEnabled(value);
+        BtnDelProPantallas.setEnabled(value);
+        BtnDelProPcarga.setEnabled(value);
+        BtnDelProCamaras.setEnabled(value);
+        btnDelEnsamblador.setEnabled(value);
+       
+       
         
     }
 
@@ -98,6 +114,9 @@ public class Interfaz extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
+        jLabel23 = new javax.swing.JLabel();
+        venta$telefonos = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,8 +211,8 @@ public class Interfaz extends javax.swing.JFrame {
         });
         jPanel1.add(DiasRestantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 40, -1));
 
-        jLabel9.setText("Gastos Salarios");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, -1));
+        jLabel9.setText("$");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 30, -1));
 
         TelefonosProducidos.setEditable(false);
         TelefonosProducidos.addActionListener(new java.awt.event.ActionListener() {
@@ -265,7 +284,7 @@ public class Interfaz extends javax.swing.JFrame {
                 numEnsambladoresActionPerformed(evt);
             }
         });
-        jPanel1.add(numEnsambladores, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 40, -1));
+        jPanel1.add(numEnsambladores, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, 40, -1));
 
         numTelefonosVendidos.setEditable(false);
         numTelefonosVendidos.addActionListener(new java.awt.event.ActionListener() {
@@ -273,7 +292,7 @@ public class Interfaz extends javax.swing.JFrame {
                 numTelefonosVendidosActionPerformed(evt);
             }
         });
-        jPanel1.add(numTelefonosVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 50, -1));
+        jPanel1.add(numTelefonosVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, 40, -1));
 
         SalarioJefe.setEditable(false);
         SalarioJefe.addActionListener(new java.awt.event.ActionListener() {
@@ -301,7 +320,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setText("Ensambladores");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 250, 110, 30));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 280, 110, 30));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setText("Almacen");
@@ -366,7 +385,7 @@ public class Interfaz extends javax.swing.JFrame {
                 btnAggEnsambladorActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAggEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, 50, 30));
+        jPanel1.add(btnAggEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 50, 30));
 
         btnDelEnsamblador.setText("-");
         btnDelEnsamblador.addActionListener(new java.awt.event.ActionListener() {
@@ -374,7 +393,7 @@ public class Interfaz extends javax.swing.JFrame {
                 btnDelEnsambladorActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDelEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, 50, 30));
+        jPanel1.add(btnDelEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 50, 30));
 
         BtnDelProPcarga.setText("-");
         BtnDelProPcarga.addActionListener(new java.awt.event.ActionListener() {
@@ -415,7 +434,7 @@ public class Interfaz extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 360, 140, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, 140, 30));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, 150));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
 
@@ -430,6 +449,20 @@ public class Interfaz extends javax.swing.JFrame {
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 10, 170));
+
+        jLabel23.setText("Gastos Salarios");
+        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, -1));
+
+        venta$telefonos.setEditable(false);
+        venta$telefonos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                venta$telefonosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(venta$telefonos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, 60, -1));
+
+        jLabel24.setText("Cantidad");
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -491,30 +524,27 @@ public class Interfaz extends javax.swing.JFrame {
                 file = fc.getSelectedFile();
                 
                 if(ProyectoSonyExperia.readCSV(file)){
-                    System.out.println(ProyectoSonyExperia.readCSV(file));
-                    System.out.println("SE CARGO BIEN EL ARCHIVO");
-//                    this.disableBtn(true);
+                    EstadoBtn(true);
                     ProyectoSonyExperia.exit = false;
                     ProyectoSonyExperia.ensamblar2();
-                    btnComenzar.setText("DEJAR DE PRODUCIR");
+                    btnComenzar.setText("DESCANSAR");
                 } else{
-                    System.out.println(ProyectoSonyExperia.readCSV(file));
-                    System.out.println("ERROR EN EL ARCHIVO");
-                    JOptionPane.showMessageDialog(null, "Error en la lectura del archivo, verifique que:\n- Hay valores correctos en el mismo (numéricos).\n- Los productores iniciales no superan los máximos permitidos.\n- Los datos del archivo son mayores que cero.\n- Existe capacidad en el almacen para poder armar Escritorios.\n- Seleccionó un archivo válido.", "Error al cargar el archivo", JOptionPane.ERROR_MESSAGE);
-//                    this.disableBtn(false);
+                    JOptionPane.showMessageDialog(null, "Error en la lectura del archivo, verifique que:\n- Los productores iniciales no superan los 10 permitidos.\n- Hay datos del archivo en blanco.\n- Seleccionó un archivo válido.", "Error al cargar el archivo", JOptionPane.ERROR_MESSAGE);
+                    EstadoBtn(false);
                     ProyectoSonyExperia.exit = true;
                     btnComenzar.setText("COMENZAR");
                     
                 }
             } else {
-                System.out.println("Open command cancelled by user.");
+                System.out.println("El usuario cancelo la operacion");
             }
-            System.out.println(returnVal);
+           
             
         }else{
 //            this.disableBtn(false);
             
-            btnComenzar.setText("COMENZAR A PRODUCIR");
+            btnComenzar.setText("COMENZAR");
+            EstadoBtn(false);
             ProyectoSonyExperia.exit = true;
         }
         
@@ -625,7 +655,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void btnDelEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelEnsambladorActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.num_ensambladores > 1 ){
-            System.out.println(ProyectoSonyExperia.num_ensambladores);
+            
             ProyectoSonyExperia.num_ensambladores--;
             ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores].despedir();
             numEnsambladores.setText(""+ProyectoSonyExperia.num_ensambladores);
@@ -686,6 +716,10 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void venta$telefonosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_venta$telefonosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_venta$telefonosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -761,6 +795,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -782,5 +818,6 @@ public class Interfaz extends javax.swing.JFrame {
     public static volatile javax.swing.JTextField numProductoresPinCarga;
     public static volatile javax.swing.JTextField numTelefonosVendidos;
     public static volatile javax.swing.JTextField pantallasProducidas;
+    public static volatile javax.swing.JTextField venta$telefonos;
     // End of variables declaration//GEN-END:variables
 }

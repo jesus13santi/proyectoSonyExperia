@@ -23,8 +23,8 @@ public class Jefe extends Thread {
     public String estado;
     public float sueldo;
     public float dia;
-    public int horas_restantes;
-    public boolean revisar;
+
+  
     public boolean contratado;
     
     
@@ -41,9 +41,9 @@ public class Jefe extends Thread {
         this.dia= dia;
         this.estado= "jugando";
         this.semJefe = semJefe;
-        this.revisar = true;
+    
         this.contratado = true;
-        this.horas_restantes = 1;
+      
         this.quincemin = ProyectoSonyExperia.dia_minuto*15;
         
     }
@@ -81,7 +81,7 @@ public class Jefe extends Thread {
             Interfaz.DiasTranscurridos.setText(""+dias_transcurridos);
             Interfaz.DiasRestantes.setText(""+contador);
 //            System.out.println("dias Transcurridos " + dias_transcurridos + "###############################");
-            Gerente.revisar = true;
+            
             semJefeGerente.release();
             
             while(horas20 > 0 && !ProyectoSonyExperia.exit){
@@ -108,104 +108,7 @@ public class Jefe extends Thread {
             }
        
           
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            ///////FORMA DE DOS ESTADOS
-//             semJefeGerente.acquire();
-//                horas_restantes =1 ;
-//                estado = "Actualizando";
-//                Interfaz.JefeEstado.setText(estado);
-//                Thread.sleep((long) (1000*(horas_restantes/24)));
-//                dias_transcurridos++;
-//                contador--;
-//                Interfaz.DiasTranscurridos.setText(""+dias_transcurridos);
-//                Interfaz.DiasRestantes.setText(""+contador);
-//                semJefeGerente.release();
-//                
-//                
-//                
-//                estado = "Trabajando";
-//                Interfaz.JefeEstado.setText(estado);
-//                Thread.sleep((long) (1000*dia*23/24));
-                
-                
-       //////////////FORMA 1 DE HACERLO     
-//            semJefeGerente.acquire();
-//            estado = "actualizando";
-//            
-//            revisar =true;
-//            
-//            
-//            System.out.println(estado);
-//            revisar = false;
-//            Interfaz.JefeEstado.setText(estado);
-//            Thread.sleep((long) (dia*1000/24));
-//            
-////            dia2 --;
-//            contador --; 
-//            dias_transcurridos++;
-//            Interfaz.DiasTranscurridos.setText(""+dias_transcurridos);
-//            Interfaz.DiasRestantes.setText(""+contador);
-//            System.out.println("dias Transcurridos " + dias_transcurridos + "###############################");
-//            Gerente.revisar = true;
-//            semJefeGerente.release();
-//            
-//            while(!revisar){
-//                estado= "jugando";
-//                Interfaz.JefeEstado.setText(estado);
-//                System.out.println(estado);
-//                Thread.sleep((long) (ProyectoSonyExperia.dia_minuto*15));// 15 MIN
-////                dia2--;
-//            
-//         
-//                estado = "revisando";
-//                System.out.println(estado);
-//                Interfaz.JefeEstado.setText(estado);
-//                Thread.sleep((long) (ProyectoSonyExperia.dia_minuto*15));
-////                Thread.sleep((long) (dia*1000/96));
-////                dia2--;
-//                
-//                
-//            }
-//       
-////            while(dia2 >0){
-////                estado= "jugando";
-////                System.out.println(estado);
-////                Thread.sleep((long) (dia*1000/12));// 15 MIN
-////                dia2--;
-////            
-////         
-////                estado = "revisando";
-////                System.out.println(estado);
-////                Thread.sleep((long) (dia*1000/12));
-////                dia2--;
-////                
-////                
-////            }
-            
-            
-            
-            
-            
-            
-           
-               
-            
-               
-//            if (contador == 0){
-//                break;
-//            }
-            
-           
-            
+     
            
             
 

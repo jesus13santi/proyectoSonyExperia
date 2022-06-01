@@ -85,8 +85,11 @@ public class ProyectoSonyExperia {
           
    public static int sueldo_Gerente = 180;
    
-   public static int numSonyExperiaVendidos = 0;
-   public static float gastosSalarios;       
+   public static volatile int numSonyExperiaVendidos = 0;
+   public static volatile float gastosSalarios;       
+   public static volatile float dinero_telefonosVendidos;       
+   public static volatile float costo_telefono=600;
+   
    
    public static volatile ProductorPantalla[] prod_pantalla;
    public static volatile ProductorCamara[] prod_camara;
@@ -123,6 +126,9 @@ public class ProyectoSonyExperia {
         try {
             
             semSonyExperia.acquire();
+            dinero_telefonosVendidos += numSonyExperia*costo_telefono;
+            Interfaz.venta$telefonos.setText(""+dinero_telefonosVendidos);
+            System.out.println(dinero_telefonosVendidos);
             numSonyExperia = 0;
             semSonyExperia.release();
             
@@ -165,12 +171,14 @@ public class ProyectoSonyExperia {
         numSonyExperia = 0;
         numSonyExperiaVendidos = 0;
         
+        
+        
         semPantallas = new Semaphore(max_pantallas);  
         semBotones = new Semaphore(max_botones);  
         semPinCarga = new Semaphore(max_pinCarga);  
         semCamaras = new Semaphore(max_camaras); 
         
-        
+        dinero_telefonosVendidos = 0;
         semJefeGerente = new Semaphore(1, true);
         
         Jefe = new Jefe(semJefeGerente, diasDespacho, sueldo_Jefe, dia, semJefeGerente);
@@ -224,7 +232,7 @@ public class ProyectoSonyExperia {
         
         Interfaz.numEnsambladores.setText(""+num_ensambladores);
         
-        
+        Interfaz.venta$telefonos.setText(""+dinero_telefonosVendidos);
         Interfaz.botonesProducidos.setText(""+numBotones);
         Interfaz.pantallasProducidas.setText(""+numPantallas);
         Interfaz.PinCargaProducidos.setText(""+numPinCarga);
@@ -296,8 +304,8 @@ public class ProyectoSonyExperia {
             
             
 
-            return true;
-//            return !(  max_trabajadores < 1 || numProd_pantallas < 1 || numProd_botones < 1 || numProd_pinCarga < 1 ||numProd_camaras < 1 || num_ensambladores < 1 || dia < 1 || diasDespacho < 1 );
+
+            return !((numProd_pantallas + numProd_botones + numProd_pinCarga + numProd_camaras + num_ensambladores) >10 ||  max_trabajadores < 1 || numProd_pantallas < 1 || numProd_botones < 1 || numProd_pinCarga < 1 ||numProd_camaras < 1 || num_ensambladores < 1 || dia < 1 || diasDespacho < 1 );
 
             
         } catch (Exception e) {

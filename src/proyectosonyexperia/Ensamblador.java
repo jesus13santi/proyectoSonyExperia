@@ -30,7 +30,7 @@ public class Ensamblador extends Thread {
     public int dia_pago =1;
     public float pago_diario;
 
-    public Ensamblador (Semaphore semPinCarga, Semaphore semPantalla, Semaphore semCamaras, Semaphore semBotones, Semaphore semSonyExperia, float sueldo, Semaphore mutexCamaras, Semaphore mutexBotones, Semaphore mutexPantallas, Semaphore mutexPinCarga, float dia){
+    public Ensamblador (Semaphore semPinCarga, Semaphore semPantalla, Semaphore semCamaras, Semaphore semBotones, Semaphore semSonyExperia, float sueldo, Semaphore mutexCamaras, Semaphore mutexBotones, Semaphore mutexPantallas, Semaphore mutexPinCarga,float dia){
         this.semPinCarga = semPinCarga;   
         this.semPantalla = semPantalla;   
         this.semCamaras = semCamaras;   
@@ -67,26 +67,30 @@ public class Ensamblador extends Thread {
                 
                 
             }
+            mutexPinCarga.acquire();
+            mutexBotones.acquire();
+            mutexCamaras.acquire();
+            mutexPantallas.acquire();
             
             if(ProyectoSonyExperia.numPinCarga>=1 && ProyectoSonyExperia.numBotones >=2 && ProyectoSonyExperia.numCamara >=2 && ProyectoSonyExperia.numPantallas >=1 ){
                 
-                mutexPinCarga.acquire();
+                
                 semPinCarga.release();
                 ProyectoSonyExperia.numPinCarga--;
                 mutexPinCarga.release();
                 
-                mutexBotones.acquire();
+                
                 semBotones.release(2);
                 ProyectoSonyExperia.numBotones-=2;
                 mutexBotones.release();
                 
                 
-                mutexCamaras.acquire();
+                
                 semCamaras.release(2);
                 ProyectoSonyExperia.numCamara-=2;
                 mutexCamaras.release();
            
-                mutexPantallas.acquire();
+                
                 semPantalla.release();
                 ProyectoSonyExperia.numPantallas--;
                 mutexPantallas.release();
@@ -104,6 +108,11 @@ public class Ensamblador extends Thread {
                 semSonyExperia.release();
                 
                
+            }else{
+                mutexCamaras.release();
+                mutexBotones.release();
+                mutexPantallas.release();
+                mutexPinCarga.release();
             }
             
            
