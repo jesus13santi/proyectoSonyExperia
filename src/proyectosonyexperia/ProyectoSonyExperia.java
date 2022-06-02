@@ -5,6 +5,7 @@
  */
 package proyectosonyexperia;
 
+import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -17,6 +18,7 @@ import java.io.IOException;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
@@ -121,6 +123,14 @@ public class ProyectoSonyExperia {
     public static volatile int numCamara=0;
     public static volatile int numSonyExperia=0;
     
+    
+    
+    //Dashboard
+    public static volatile int prod_botonesDash;
+    public static volatile int prod_camarasDash;
+    public static volatile int prod_pantallasDash;
+    public static volatile int prod_pinCargaDash;
+    
     public static void vender(){
         
         try {
@@ -137,28 +147,7 @@ public class ProyectoSonyExperia {
         }
         
     }
-    public static void ensamblar(){
-//        productorPantalla1 = new ProductorPantalla(semPantallas, 10,mutexPantalla, dia );
-//        productorBotones1 = new ProductorBotones(semBotones, 10,mutexPantalla, dia );
-//        productorPinCarga1 = new ProductorPinCarga(semPinCarga, 10,mutexPantalla, dia );
-//        productorCamara1 = new ProductorCamara(semCamaras, 10,mutexPantalla, dia );
-//        Ensamblador1 = new Ensamblador(semPinCarga, semPantallas, semCamaras, semBotones, semSonyExperia,  10, mutexPantalla, dia);
-        Jefe = new Jefe(semJefeGerente, 30, 10, dia, semJefeGerente);
-        Gerente = new Gerente(semJefeGerente, 30, 10, dia, semJefeGerente);
-        
-        Interfaz.botonesProducidos.setText(""+numBotones);
-        Interfaz.pantallasProducidas.setText(""+numPantallas);
-        Interfaz.PinCargaProducidos.setText(""+numPinCarga);
-        Interfaz.CamarasProducidas.setText(""+numCamara);
-        productorPantalla1.start();
-        productorBotones1.start();
-        productorPinCarga1.start();
-        productorCamara1.start();
-        Ensamblador1.start();
-        Jefe.start();
-        Gerente.start();
     
-    }
     
     
     public static void ensamblar2(){
@@ -315,56 +304,203 @@ public class ProyectoSonyExperia {
         
     }
     
+//    public static void readCSVdash(String filePath){
+//        
+//        try {
+//            File file = new File(filePath);
+//            String tmp;
+//            
+//            Scanner load = new Scanner(file);
+//            load.useDelimiter(",|\n|\r");
+//            
+//            while(load.nextLine()!=null){
+//                load.nextLine();
+//                System.out.println("Hola");
+//                tmp = load.next();
+//                
+//                prod_botonesDash = Integer.parseInt(tmp);
+//                
+//                tmp = load.next();
+//                prod_camarasDash = Integer.parseInt(tmp);
+//                tmp = load.next();
+//                prod_pinCargaDash = Integer.parseInt(tmp);
+//                tmp = load.next();
+//                prod_pantallasDash = Integer.parseInt(tmp);
+//               
+//            }
+//            
+//           
+//            
+//            
+//            
+//            
+//            
+//            
+//
+//
+//            
+//
+//            
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            
+//            
+//        }
+//      
+//        
+//    }
+    
+    public static void read(String filePath) {
+    File file = new File(filePath);
+    String guardar = null;
+    boolean es = false;
+    
+    
+    
+    char[] aCaracteres = null;
+    if (!file.exists()) {
+                 System.out.println ("¡El archivo no existe!");
+        return;
+    }
+    try {
+                 // Crear objeto de lectura CSV
+        CsvReader csvReader = new CsvReader(filePath);
+                 // lee el encabezado del medidor
+        csvReader.readHeaders();
+//        System.out.println(csvReader.readRecord());
+        while (csvReader.readRecord() && !es) {
+                         // lee una fila de datos
+            guardar = csvReader.getRawRecord();
+            aCaracteres = guardar.toCharArray();
+            if(aCaracteres[0] == '2'){
+                System.out.println("Hola");
+                es= true;
+                
+            }
+//            System.out.println(csvReader.getRawRecord());
+            
+        }
+        
+        
+        System.out.println(aCaracteres);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
     public static void writeCsv(String filePath) {
     try {
         File file = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();
         }
+        
         // Crear objeto de escritura CSV
-        List<String> testList = new ArrayList<String>();
-        CsvWriter csvWriter = new CsvWriter(filePath, ',', Charset.forName("GBK"));
+        CsvWriter csvWriter = new CsvWriter(filePath);
                  // escribir encabezado
-        String[] headers = {"content","Estado","Monda"};
+        String[] headers = {"Productores Botones","Productores Camaras","Productores Pin Carga","Productores Pantallas","Ensambladores"};
        
-        csvWriter.writeRecord(headers);
+        csvWriter.writeRecord(headers, false);
 
         String[] content1;
         content1 = new String[headers.length];
-        content1[0]= "Hola";
-        content1[1]= "Hola";
-        content1[2]= "Hola";
-        String[] content2 = {"world"};
-        
-        
-        csvWriter.writeRecord(content1);
-        csvWriter.writeRecord(content2);
-        csvWriter.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-        
-    public static void escribirCSV(String filePath) throws CsvValidationException {
-    try {
-        String [] pais = {"Sain", "ES", "ESP", "724", "Yes"};
-        
-        
-        CSVWriter writer = new CSVWriter(new FileWriter(filePath));
-        writer.writeNext(pais);
+        content1[0]= "2";
+        content1[1]= "1";
+        content1[2]= "1";
+        content1[3]= "1";
+        content1[4]= "1";
        
-        System.out.println("Escrito");
+        
+        String[] content2 = {"2","2","5","4","5"};
+        String[] content3 = {"2","2","5","4","5"};
+        
+        csvWriter.writeRecord(content1,false);
+       
+        csvWriter.writeRecord(content2,false);
+        
+        
+        
+        
+        
+        csvWriter.close();
+        
+        
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+        
+    }
+}
+    
+    public static void leerEscribircsv(String filePath){
+        File file = new File(filePath);
+        String guardar = null;
+        boolean es = false;
+        char[] aCaracteres = null;
+        String[] aCarac = null;
+        String[] headers; 
+    if (!file.exists()) {
+                 System.out.println ("¡El archivo no existe!");
+        return;
+    }
+    try {
+                 // Crear objeto de lectura CSV
+        CsvReader csvReader = new CsvReader(filePath);
+        
+        CsvWriter csvWriter = new CsvWriter(filePath);
+                 // lee el encabezado del medidor
+        csvReader.readHeaders();
+        headers = csvReader.getHeaders();
+        csvWriter.writeRecord(headers, true);
+        
+//        System.out.println(csvReader.readRecord());
+        while (csvReader.readRecord() && !es) {
+                         // lee una fila de datos
+            guardar = csvReader.getRawRecord();
+            aCaracteres = guardar.toCharArray();
+
+            aCarac = guardar.split(",");
+           
+            
+            if(aCarac[0].equals("2")){
+                aCarac[0]= "3";
+                System.out.println("hola");
+//                es= true;
+                
+            }
+            csvWriter.writeRecord(aCarac, true);
+//            System.out.println(csvReader.getRawRecord());
+            
+        }
+        
+        csvWriter.close();
+        System.out.println(aCaracteres);
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+    
+        
+//    public static void escribirCSV(String filePath) throws CsvValidationException {
+//    try {
+//        String [] pais = {"Sain", "ES", "ESP", "724", "Yes"};
+//        
+//        
+//        CSVWriter writer = new CSVWriter(new FileWriter(filePath));
+//        writer.writeNext(pais);
+//       
+//        System.out.println("Escrito");
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+//}
    
     
     public static void main(String[] args) throws CsvValidationException  {
         // TODO code application logic here
         Interfaz.main(args);
         writeCsv("estadistica.csv");
-       
+//        read("estadistica.csv");
+          leerEscribircsv("estadistica.csv");
         
         
                
