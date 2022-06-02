@@ -67,6 +67,10 @@ public class Jefe extends Thread {
                 ProyectoSonyExperia.mutexSalario.acquire();
                 ProyectoSonyExperia.gastosSalarios += sueldo;
                 Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
+                
+                //DashBoard
+                ProyectoSonyExperia.gastosTotalesDash += sueldo;
+                
                 ProyectoSonyExperia.mutexSalario.release();
                 dia_pago += 1;
                 
@@ -78,6 +82,10 @@ public class Jefe extends Thread {
             
             
             dias_transcurridos++;
+            //DashBoard
+            ProyectoSonyExperia.diasDash++;
+            
+            
             Interfaz.DiasTranscurridos.setText(""+dias_transcurridos);
             Interfaz.DiasRestantes.setText(""+contador);
 //            System.out.println("dias Transcurridos " + dias_transcurridos + "###############################");

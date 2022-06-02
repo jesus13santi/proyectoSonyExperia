@@ -47,6 +47,11 @@ public class ProductorCamara extends Thread {
                 ProyectoSonyExperia.mutexSalario.acquire();                  
                 ProyectoSonyExperia.gastosSalarios += sueldo;
                 Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
+                
+                //DashBoard
+                ProyectoSonyExperia.gastosTotalesDash += sueldo;
+                
+                
                 ProyectoSonyExperia.mutexSalario.release();
                 dia_pago += 1;
                 

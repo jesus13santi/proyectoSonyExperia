@@ -58,6 +58,10 @@ public class Ensamblador extends Thread {
                     ProyectoSonyExperia.mutexSalario.acquire();
                     ProyectoSonyExperia.gastosSalarios += sueldo;
                     Interfaz.gastosSalarios.setText(""+ProyectoSonyExperia.gastosSalarios);
+                    
+                    //DashBoard
+                    ProyectoSonyExperia.gastosTotalesDash += sueldo;
+                    
                     ProyectoSonyExperia.mutexSalario.release();
                     
                     
@@ -103,7 +107,8 @@ public class Ensamblador extends Thread {
             
                 ProyectoSonyExperia.numSonyExperia++;
                 Interfaz.TelefonosProducidos.setText(""+ProyectoSonyExperia.numSonyExperia);
-                
+                //DashBoard
+                ProyectoSonyExperia.telefonosVendidosDash++;
             
                 semSonyExperia.release();
                 

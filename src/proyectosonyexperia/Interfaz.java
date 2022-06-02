@@ -545,6 +545,7 @@ public class Interfaz extends javax.swing.JFrame {
             
             btnComenzar.setText("COMENZAR");
             EstadoBtn(false);
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.exit = true;
         }
         
@@ -593,7 +594,9 @@ public class Interfaz extends javax.swing.JFrame {
     private void BtnDelProBotonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDelProBotonesActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.numProd_botones > 1 ){
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.numProd_botones--;
+            
             ProyectoSonyExperia.prod_botones[ProyectoSonyExperia.numProd_botones].despedir();
             numProductoresBotones.setText(""+ProyectoSonyExperia.numProd_botones);
         }else{
@@ -609,6 +612,8 @@ public class Interfaz extends javax.swing.JFrame {
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
             ProyectoSonyExperia.prod_botones[ProyectoSonyExperia.numProd_botones] = new ProductorBotones(ProyectoSonyExperia.semBotones, 10,ProyectoSonyExperia.mutexBotones, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_botones[ProyectoSonyExperia.numProd_botones].start();
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
+            
             ProyectoSonyExperia.numProd_botones++;
             numProductoresBotones.setText(""+ProyectoSonyExperia.numProd_botones);
         }else{
@@ -621,6 +626,7 @@ public class Interfaz extends javax.swing.JFrame {
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
             ProyectoSonyExperia.prod_pantalla[ProyectoSonyExperia.numProd_pantallas] = new ProductorPantalla(ProyectoSonyExperia.semPantallas, 10,ProyectoSonyExperia.mutexPantallas, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_pantalla[ProyectoSonyExperia.numProd_pantallas].start();
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.numProd_pantallas++;
             numProductoresPantallas.setText(""+ProyectoSonyExperia.numProd_pantallas);
         }else{
@@ -633,6 +639,7 @@ public class Interfaz extends javax.swing.JFrame {
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
             ProyectoSonyExperia.prod_pinCarga[ProyectoSonyExperia.numProd_pinCarga] = new ProductorPinCarga(ProyectoSonyExperia.semPinCarga, 10,ProyectoSonyExperia.mutexPinCarga, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_pinCarga[ProyectoSonyExperia.numProd_pinCarga].start();
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.numProd_pinCarga++;
             numProductoresPinCarga.setText(""+ProyectoSonyExperia.numProd_pinCarga);
         }else{
@@ -645,6 +652,7 @@ public class Interfaz extends javax.swing.JFrame {
         if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
             ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores] = new Ensamblador(ProyectoSonyExperia.semPinCarga,ProyectoSonyExperia.semPantallas, ProyectoSonyExperia.semCamaras, ProyectoSonyExperia.semBotones, ProyectoSonyExperia.semSonyExperia,  ProyectoSonyExperia.sueldo_ensamblador, ProyectoSonyExperia.mutexCamaras, ProyectoSonyExperia.mutexBotones, ProyectoSonyExperia.mutexPantallas, ProyectoSonyExperia.mutexPinCarga, ProyectoSonyExperia.dia);
             ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores].start();
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.num_ensambladores++;
             numEnsambladores.setText(""+ProyectoSonyExperia.num_ensambladores);
         }else{
@@ -655,7 +663,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void btnDelEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelEnsambladorActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.num_ensambladores > 1 ){
-            
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.num_ensambladores--;
             ProyectoSonyExperia.ensambladores[ProyectoSonyExperia.num_ensambladores].despedir();
             numEnsambladores.setText(""+ProyectoSonyExperia.num_ensambladores);
@@ -678,6 +686,8 @@ public class Interfaz extends javax.swing.JFrame {
     private void BtnDelProPantallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDelProPantallasActionPerformed
         // TODO add your handling code here:
         if( ProyectoSonyExperia.numProd_pantallas > 1 ){
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
+            
             ProyectoSonyExperia.numProd_pantallas--;
             ProyectoSonyExperia.prod_pantalla[ProyectoSonyExperia.numProd_pantallas].despedir();
             numProductoresPantallas.setText(""+ProyectoSonyExperia.numProd_pantallas);
@@ -691,6 +701,7 @@ public class Interfaz extends javax.swing.JFrame {
        if( ProyectoSonyExperia.numProd_botones + ProyectoSonyExperia.numProd_camaras + ProyectoSonyExperia.numProd_pinCarga + ProyectoSonyExperia.numProd_pantallas + ProyectoSonyExperia.num_ensambladores < ProyectoSonyExperia.max_trabajadores ){
             ProyectoSonyExperia.prod_camara[ProyectoSonyExperia.numProd_camaras] = new ProductorCamara(ProyectoSonyExperia.semCamaras, 10,ProyectoSonyExperia.mutexCamaras, ProyectoSonyExperia.dia );
             ProyectoSonyExperia.prod_camara[ProyectoSonyExperia.numProd_camaras].start();
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.numProd_camaras++;
             numProductoresCamaras.setText(""+ProyectoSonyExperia.numProd_camaras);
         }else{
@@ -705,6 +716,7 @@ public class Interfaz extends javax.swing.JFrame {
         
         if( ProyectoSonyExperia.numProd_camaras > 1 ){
             ProyectoSonyExperia.numProd_camaras--;
+            ProyectoSonyExperia.leerEscribircsv("estadistica.csv");
             ProyectoSonyExperia.prod_camara[ProyectoSonyExperia.numProd_camaras].despedir();
             numProductoresCamaras.setText(""+ProyectoSonyExperia.numProd_camaras);
         }else{
@@ -715,6 +727,10 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        ProyectoSonyExperia.leerDash("estadistica.csv");
+        EstadoBtn(false);
+        ProyectoSonyExperia.exit = true;
+        btnComenzar.setText("COMENZAR");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void venta$telefonosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_venta$telefonosActionPerformed
